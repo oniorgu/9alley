@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Log In — 9 Alley</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0c0b0a; --charcoal:#171514; --ivory:#ece5d8; --ivory-dim:#b8b0a2;
+    --burgundy:#6b1e2b; --burgundy-bright:#8f2a3a; --gold-soft:#cdae6c; --hair:rgba(236,229,216,0.14);
+    --display:'Bebas Neue',Impact,sans-serif; --body:'Work Sans',system-ui,sans-serif;
+    box-sizing:border-box;
+  }
+  *,*::before,*::after{ box-sizing:inherit; }
+  html,body{ height:100%; margin:0; }
+  body{
+    background: var(--black); color: var(--ivory); font-family: var(--body);
+    display:flex; align-items:center; justify-content:center; padding: 32px;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color: var(--gold-soft); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  :focus-visible{ outline: 2px solid var(--gold-soft); outline-offset: 3px; }
+
+  .card{
+    width: 100%; max-width: 400px;
+    border: 1px solid var(--hair);
+    background: var(--charcoal);
+    padding: 40px 34px;
+  }
+  .brandmark{
+    display:flex; align-items:baseline; gap:8px;
+    font-family: var(--display); font-size: 1.4rem; letter-spacing: 0.04em;
+    margin-bottom: 30px;
+  }
+  .brandmark .nine{ color: var(--gold-soft); border: 1px solid var(--gold-soft); padding: 0 7px; }
+  h1{
+    font-family: var(--display); font-weight:400; font-size: 2rem;
+    letter-spacing: 0.02em; margin: 0 0 6px;
+  }
+  .sub{ color: var(--ivory-dim); font-size: 0.9rem; margin: 0 0 28px; }
+
+  label{ display:block; font-size: 0.78rem; letter-spacing: 0.04em; color: var(--ivory-dim); margin: 18px 0 8px; }
+  input{
+    width: 100%; background: var(--black); border: 1px solid var(--hair);
+    color: var(--ivory); padding: 13px 14px; font-family: var(--body); font-size: 0.95rem;
+  }
+  input:focus{ outline: none; border-color: var(--gold-soft); }
+
+  button[type="submit"]{
+    width: 100%; margin-top: 26px; padding: 14px; background: var(--burgundy);
+    border: 1px solid var(--burgundy); color: var(--ivory); font-size: 0.9rem;
+    letter-spacing: 0.03em; cursor:pointer; transition: background .2s ease;
+  }
+  button[type="submit"]:hover{ background: var(--burgundy-bright); }
+
+  .status{ margin-top: 16px; font-size: 0.85rem; min-height: 1.2em; }
+  .status.error{ color: #d98a8a; }
+  .status.ok{ color: var(--gold-soft); }
+
+  .switch{ margin-top: 24px; font-size: 0.85rem; color: var(--ivory-dim); text-align:center; }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <a href="index.html" class="brandmark"><span class="nine">9</span> ALLEY</a>
+    <h1>Log in</h1>
+    <p class="sub">Welcome back — pick up right where you left off in the Alley.</p>
+
+    <form id="login-form">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email">
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required minlength="8" autocomplete="current-password">
+
+      <button type="submit">Log in</button>
+      <p class="status" id="status"></p>
+    </form>
+
+    <p class="switch">New here? <a href="signup.html">Create an account</a></p>
+  </div>
+
+<script>
+  // Replace with your deployed backend URL once it's live (see README.md).
+  var API_BASE = 'http://localhost:4000';
+
+  document.getElementById('login-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var statusEl = document.getElementById('status');
+    statusEl.className = 'status';
+    statusEl.textContent = 'Logging in...';
+
+    var payload = {
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value
+    };
+
+    fetch(API_BASE + '/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(res){ return res.json().then(function(data){ return { ok: res.ok, data: data }; }); })
+    .then(function(result){
+      if (result.ok){
+        // Store the login token so future requests know who you are.
+        // localStorage is fine for a first version; for production, a
+        // secure httpOnly cookie set by the backend is the safer choice.
+        localStorage.setItem('nineAlleyToken', result.data.token);
+        statusEl.className = 'status ok';
+        statusEl.textContent = 'Logged in. Redirecting...';
+        setTimeout(function(){ window.location.href = 'index.html'; }, 800);
+      } else {
+        statusEl.className = 'status error';
+        statusEl.textContent = result.data.message || 'Incorrect email or password.';
+      }
+    })
+    .catch(function(){
+      statusEl.className = 'status error';
+      statusEl.textContent = "Couldn't reach the server. Is the backend running? See README.md.";
+    });
+  });
+</script>
+
+</body>
+</html>

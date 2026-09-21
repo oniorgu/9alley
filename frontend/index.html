@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>9 ALLEY — Play. Connect. Discover.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;500;600&family=Libre+Caslon+Text:ital@0;1&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --black: #0c0b0a;
+    --charcoal: #171514;
+    --charcoal-2: #211e1c;
+    --ivory: #ece5d8;
+    --ivory-dim: #b8b0a2;
+    --burgundy: #6b1e2b;
+    --burgundy-bright: #8f2a3a;
+    --gold: #b6903f;
+    --gold-soft: #cdae6c;
+    --hair: rgba(236,229,216,0.14);
+
+    --display: 'Bebas Neue', Impact, sans-serif;
+    --body: 'Work Sans', system-ui, sans-serif;
+    --editorial: 'Libre Caslon Text', Georgia, serif;
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *,*::before,*::after{ box-sizing: inherit; }
+  html{ scroll-behavior: smooth; scroll-padding-top: calc(72px + env(safe-area-inset-top,0px)); }
+
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    background: var(--black);
+    color: var(--ivory);
+    font-family: var(--body);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a{ color: inherit; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 56px);
+  }
+
+  ::selection{ background: var(--burgundy); color: var(--ivory); }
+
+  :focus-visible{
+    outline: 2px solid var(--gold-soft);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position: fixed;
+    top: env(safe-area-inset-top, 0px);
+    left:0; right:0;
+    z-index: 100;
+    background: rgba(12,11,10,0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--hair);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .brandmark{
+    display:flex;
+    align-items:baseline;
+    gap: 8px;
+    font-family: var(--display);
+    letter-spacing: 0.04em;
+    font-size: 1.55rem;
+    text-decoration:none;
+  }
+  .brandmark .nine{
+    color: var(--gold-soft);
+    border: 1px solid var(--gold-soft);
+    padding: 0 8px;
+    line-height: 1.5;
+  }
+  nav.links{
+    display:flex;
+    gap: clamp(16px, 3vw, 34px);
+    font-size: 0.86rem;
+    letter-spacing: 0.02em;
+  }
+  nav.links a{
+    text-decoration:none;
+    color: var(--ivory-dim);
+    position:relative;
+    padding: 6px 0;
+    transition: color .2s ease;
+  }
+  nav.links a:hover{ color: var(--ivory); }
+  nav.links a::after{
+    content:"";
+    position:absolute; left:0; right:100%; bottom:0;
+    height:1px; background: var(--gold-soft);
+    transition: right .25s ease;
+  }
+  nav.links a:hover::after{ right:0; }
+
+  #menu-toggle{ display:none; }
+  .burger{
+    display:none;
+    width: 34px; height: 34px;
+    border: 1px solid var(--hair);
+    align-items:center; justify-content:center;
+    cursor:pointer;
+    background:none;
+    color: var(--ivory);
+  }
+  .burger span, .burger span::before, .burger span::after{
+    content:""; display:block; width:16px; height:1px; background: var(--ivory);
+    position:relative;
+  }
+  .burger span::before{ position:absolute; top:-6px; }
+  .burger span::after{ position:absolute; top:6px; }
+
+  @media (max-width: 760px){
+    nav.links{
+      position:fixed;
+      top: calc(72px + env(safe-area-inset-top,0px));
+      left:0; right:0;
+      flex-direction:column;
+      background: var(--black);
+      border-bottom: 1px solid var(--hair);
+      padding: 6px 24px 22px;
+      gap: 4px;
+      transform: translateY(-8px);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    nav.links a{ padding: 12px 0; border-bottom: 1px solid var(--hair); }
+    #menu-toggle:checked ~ nav.links{ opacity:1; transform:none; pointer-events:auto; }
+    .burger{ display:inline-flex; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height: 100svh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    position:relative;
+    padding-top: 72px;
+    background:
+      radial-gradient(ellipse 900px 500px at 82% 12%, rgba(107,30,43,0.35), transparent 60%),
+      linear-gradient(180deg, var(--black), #0a0908 70%);
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, var(--hair) 0 1px, transparent 1px 120px);
+    opacity:.5;
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; }
+  .eyebrow-line{
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--ivory-dim);
+    font-size: 0.95rem;
+    max-width: 30em;
+    margin: 0 0 28px;
+  }
+  .hero h1{
+    font-family: var(--display);
+    font-size: clamp(4.2rem, 14vw, 10.5rem);
+    line-height: 0.86;
+    letter-spacing: 0.01em;
+    margin: 0;
+    color: var(--ivory);
+  }
+  .hero h1 .accent{ color: transparent; -webkit-text-stroke: 1.5px var(--gold-soft); }
+  .hero-tagline{
+    margin-top: 22px;
+    font-family: var(--display);
+    font-size: clamp(1rem, 2.4vw, 1.5rem);
+    letter-spacing: 0.28em;
+    color: var(--gold-soft);
+  }
+  .hero-sub{
+    margin-top: 30px;
+    max-width: 38em;
+    color: var(--ivory-dim);
+    font-size: 1.05rem;
+  }
+  .hero-cta{
+    margin-top: 40px;
+    display:flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    display:inline-block;
+    padding: 15px 30px;
+    font-size: 0.92rem;
+    letter-spacing: 0.03em;
+    text-decoration:none;
+    border: 1px solid var(--gold-soft);
+    color: var(--ivory);
+    transition: background .2s ease, color .2s ease;
+  }
+  .btn.solid{ background: var(--burgundy); border-color: var(--burgundy); }
+  .btn.solid:hover{ background: var(--burgundy-bright); border-color: var(--burgundy-bright); }
+  .btn.ghost:hover{ background: var(--gold-soft); color: var(--black); }
+
+  .hero-foot{
+    position:absolute;
+    bottom: 34px; left: 0; right:0;
+    display:flex; justify-content:space-between;
+    font-size: 0.78rem;
+    color: var(--ivory-dim);
+    letter-spacing: 0.05em;
+  }
+  @media (max-width: 640px){ .hero-foot{ display:none; } }
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{ padding: clamp(70px, 11vw, 130px) 0; }
+  .section-dark{ background: var(--black); }
+  .section-charcoal{ background: var(--charcoal); border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+
+  .kicker{
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--gold-soft);
+    font-size: 0.95rem;
+    margin: 0 0 14px;
+  }
+  h2.title{
+    font-family: var(--display);
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height: 0.96;
+    margin: 0 0 26px;
+    max-width: 14em;
+  }
+  .lede{
+    max-width: 42em;
+    color: var(--ivory-dim);
+    font-size: 1.08rem;
+  }
+
+  /* ---------- REBRAND ---------- */
+  .rebrand-compare{
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items:center;
+    gap: 28px;
+    margin-top: 56px;
+    padding-top: 44px;
+    border-top: 1px solid var(--hair);
+  }
+  .rebrand-old{ opacity:0.45; }
+  .rebrand-old, .rebrand-new{
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 5vw, 3.2rem);
+    line-height: 1;
+  }
+  .rebrand-new{ color: var(--gold-soft); }
+  .rebrand-tag{
+    display:block;
+    font-family: var(--body);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--ivory-dim);
+    margin-bottom: 10px;
+  }
+  .arrow-mid{ font-family: var(--display); font-size: 2rem; color: var(--ivory-dim); }
+  @media (max-width: 640px){
+    .rebrand-compare{ grid-template-columns: 1fr; text-align:left; }
+    .arrow-mid{ transform: rotate(90deg); width:fit-content; }
+  }
+
+  /* ---------- THE ALLEY GRID ---------- */
+  .alley-grid{
+    margin-top: 54px;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--hair);
+    border-left: 1px solid var(--hair);
+  }
+  .alley-cell{
+    border-right: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+    padding: 34px 26px;
+    min-height: 220px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition: background .25s ease;
+  }
+  .alley-cell:hover{ background: rgba(182,144,63,0.06); }
+  .alley-mark{
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--gold-soft);
+    font-size: 1.5rem;
+  }
+  .alley-cell h3{
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+    margin: 18px 0 10px;
+  }
+  .alley-cell p{ color: var(--ivory-dim); font-size: 0.92rem; margin:0; }
+  .alley-cell.after-dark{ background: linear-gradient(160deg, rgba(107,30,43,0.28), transparent); }
+  .alley-cell.after-dark h3{ color: var(--gold-soft); }
+
+  @media (max-width: 940px){ .alley-grid{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px){ .alley-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- GAME COLLECTION ---------- */
+  .catalogue{
+    margin-top: 54px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hair);
+  }
+  .cat-card{ background: var(--black); padding: 30px 28px; }
+  .cat-card h4{
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    color: var(--gold-soft);
+    margin: 0 0 16px;
+  }
+  .cat-card ul{ list-style:none; padding:0; margin:0; color: var(--ivory-dim); font-size:0.95rem; }
+  .cat-card li{ padding: 6px 0; border-bottom: 1px solid var(--hair); }
+  .cat-card li:last-child{ border-bottom:none; }
+  .cat-card.feature{ background: var(--charcoal-2); }
+  .cat-card.feature h4{ color: var(--ivory); }
+  .cat-card.feature li{ color: var(--ivory); }
+
+  @media (max-width: 860px){ .catalogue{ grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px){ .catalogue{ grid-template-columns: 1fr; } }
+
+  /* ---------- SHOP ---------- */
+  .shop-toolbar{
+    margin-top: 54px;
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .shop-filters{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .filter-pill{
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    padding: 9px 16px;
+    border: 1px solid var(--hair);
+    color: var(--ivory-dim);
+    background: none;
+    cursor: pointer;
+    transition: border-color .2s ease, color .2s ease;
+  }
+  .filter-pill.active, .filter-pill:hover{ border-color: var(--gold-soft); color: var(--ivory); }
+
+  .cart-status{
+    font-size: 0.82rem;
+    color: var(--ivory-dim);
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+  .cart-count{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width: 20px; height: 20px;
+    border: 1px solid var(--gold-soft);
+    color: var(--gold-soft);
+    font-size: 0.72rem;
+  }
+
+  .shop-grid{
+    margin-top: 40px;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--hair);
+  }
+  .product-card{
+    background: var(--black);
+    padding: 0 0 22px;
+    display:flex;
+    flex-direction: column;
+  }
+  .product-media{
+    aspect-ratio: 1;
+    background: linear-gradient(155deg, var(--charcoal-2), var(--charcoal));
+    position: relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .product-media span{
+    font-family: var(--display);
+    font-size: 2.6rem;
+    letter-spacing: 0.06em;
+    color: var(--hair);
+  }
+  .product-tag{
+    position:absolute; top: 12px; left: 12px;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 4px 9px;
+    background: var(--burgundy);
+    color: var(--ivory);
+  }
+  .product-info{ padding: 18px 20px 0; flex:1; display:flex; flex-direction:column; }
+  .product-cat{
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--gold-soft);
+    margin-bottom: 8px;
+  }
+  .product-name{
+    font-family: var(--display);
+    font-size: 1.25rem;
+    letter-spacing: 0.02em;
+    margin: 0 0 10px;
+    flex:1;
+  }
+  .product-row{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-top: 10px;
+  }
+  .product-price{ font-size: 0.95rem; color: var(--ivory); }
+  .add-btn{
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    padding: 8px 14px;
+    background: none;
+    border: 1px solid var(--gold-soft);
+    color: var(--gold-soft);
+    cursor:pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+  .add-btn:hover, .add-btn:focus-visible{ background: var(--gold-soft); color: var(--black); }
+  .add-btn.added{ background: var(--burgundy); border-color: var(--burgundy); color: var(--ivory); }
+
+  @media (max-width: 940px){ .shop-grid{ grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px){ .shop-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- COMICS ---------- */
+  .comics-row{
+    margin-top: 54px;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 40px;
+  }
+  .comics-col h4{
+    font-family: var(--display);
+    font-size: 1.5rem;
+    margin: 0 0 16px;
+    letter-spacing: 0.02em;
+  }
+  .comics-col ul{ margin:0; padding:0; list-style:none; color: var(--ivory-dim); }
+  .comics-col li{ padding: 8px 0; border-bottom: 1px solid var(--hair); font-size: 0.95rem; }
+  .comics-col.origin{
+    background: var(--charcoal);
+    border: 1px solid var(--hair);
+    padding: 28px;
+  }
+  .comics-col.origin h4{ color: var(--gold-soft); }
+  .comics-col.origin p{ color: var(--ivory-dim); font-size: 0.95rem; margin: 0 0 12px; }
+
+  @media (max-width: 860px){ .comics-row{ grid-template-columns: 1fr; } }
+
+  /* ---------- AFTER DARK ---------- */
+  .afterdark{
+    background:
+      radial-gradient(ellipse 700px 400px at 15% 20%, rgba(107,30,43,0.4), transparent 60%),
+      var(--black);
+    border-top: 1px solid var(--burgundy);
+    border-bottom: 1px solid var(--burgundy);
+    position:relative;
+  }
+  .afterdark .wrap{ display:grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items:start; }
+  .afterdark h2.title{ color: var(--gold-soft); }
+  .age-gate{
+    border: 1px solid var(--gold-soft);
+    padding: 26px 28px;
+    font-size: 0.86rem;
+    color: var(--ivory-dim);
+    letter-spacing: 0.02em;
+  }
+  .age-gate strong{ color: var(--ivory); display:block; margin-bottom:8px; font-family: var(--display); font-size:1.1rem; letter-spacing: 0.04em;}
+  @media (max-width: 860px){ .afterdark .wrap{ grid-template-columns: 1fr; } }
+
+  /* ---------- ARENA / STATS ---------- */
+  .arena-strip{
+    margin-top: 54px;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0;
+    border-top: 1px solid var(--hair);
+  }
+  .arena-item{
+    flex: 1 1 200px;
+    padding: 30px 26px;
+    border-right: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+  }
+  .arena-item h5{
+    font-family: var(--display);
+    font-size: 1.3rem;
+    margin: 0 0 8px;
+    color: var(--gold-soft);
+    letter-spacing: 0.02em;
+  }
+  .arena-item p{ margin:0; color: var(--ivory-dim); font-size: 0.9rem; }
+
+  /* ---------- EVENTS TICKER ---------- */
+  .events-list{ margin-top: 54px; }
+  .event-row{
+    display:flex;
+    justify-content: space-between;
+    align-items:baseline;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--hair);
+    gap: 20px;
+  }
+  .event-row:first-child{ border-top: 1px solid var(--hair); }
+  .event-name{
+    font-family: var(--display);
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    letter-spacing: 0.02em;
+  }
+  .event-desc{ color: var(--ivory-dim); font-size: 0.92rem; max-width: 30em; text-align:right; }
+  @media (max-width: 700px){
+    .event-row{ flex-direction:column; align-items:flex-start; gap:6px; }
+    .event-desc{ text-align:left; }
+  }
+
+  /* ---------- VISION / CLOSE ---------- */
+  .vision{
+    background: linear-gradient(180deg, var(--charcoal), var(--black));
+    text-align:center;
+  }
+  .vision .kicker{ display:block; }
+  .vision h2.title{ margin-left:auto; margin-right:auto; max-width: 18em; }
+  .vision-line{
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--ivory-dim);
+    font-size: 1.15rem;
+    max-width: 34em;
+    margin: 0 auto 46px;
+  }
+  .vision-words{
+    display:flex; justify-content:center; flex-wrap:wrap; gap: 10px 26px;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    color: var(--ivory-dim);
+    margin-bottom: 50px;
+  }
+  .vision-words span:not(:last-child)::after{ content:"·"; margin-left: 26px; color: var(--gold-soft); }
+
+  .big-mark{
+    font-family: var(--display);
+    font-size: clamp(3.5rem, 12vw, 8rem);
+    letter-spacing: 0.3em;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--hair);
+    margin: 0;
+  }
+
+  /* ---------- NEWSLETTER ---------- */
+  .newsletter{
+    background: var(--black);
+    border-top: 1px solid var(--hair);
+  }
+  .newsletter .wrap{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  .newsletter h2.title{ margin:0; max-width: 12em; }
+  .nl-form{
+    display:flex;
+    gap: 0;
+    flex: 1 1 360px;
+    max-width: 460px;
+    border: 1px solid var(--hair);
+  }
+  .nl-form input[type="email"]{
+    flex:1;
+    background: none;
+    border: none;
+    padding: 16px 18px;
+    color: var(--ivory);
+    font-family: var(--body);
+    font-size: 0.95rem;
+  }
+  .nl-form input[type="email"]::placeholder{ color: var(--ivory-dim); }
+  .nl-form input[type="email"]:focus{ outline: none; }
+  .nl-form button{
+    border: none;
+    border-left: 1px solid var(--hair);
+    background: var(--burgundy);
+    color: var(--ivory);
+    padding: 0 24px;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    cursor:pointer;
+    transition: background .2s ease;
+  }
+  .nl-form button:hover{ background: var(--burgundy-bright); }
+  .nl-note{
+    width:100%;
+    font-size: 0.78rem;
+    color: var(--ivory-dim);
+    margin-top: 12px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--black);
+    border-top: 1px solid var(--hair);
+    padding: 50px 0 40px;
+  }
+  .foot-row{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap: 20px;
+  }
+  .foot-brand{ font-family: var(--display); font-size: 1.3rem; letter-spacing: 0.04em; }
+  .foot-links{ display:flex; gap: 24px; font-size: 0.85rem; color: var(--ivory-dim); }
+  .foot-links a{ text-decoration:none; color: var(--ivory-dim); }
+  .foot-links a:hover{ color: var(--gold-soft); }
+  .foot-fine{ margin-top: 30px; font-size: 0.76rem; color: var(--ivory-dim); opacity:0.7; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brandmark"><span class="nine">9</span> ALLEY</a>
+    <input type="checkbox" id="menu-toggle" aria-hidden="true">
+    <label for="menu-toggle" class="burger" aria-label="Toggle menu" role="button" tabindex="0"><span></span></label>
+    <nav class="links">
+      <a href="#alley">The Alley</a>
+      <a href="#games">Games</a>
+      <a href="#shop">Shop</a>
+      <a href="#comics">Comics</a>
+      <a href="#afterdark">After Dark</a>
+      <a href="#events">Events</a>
+      <a href="#vision">Vision</a>
+      <a href="#newsletter">Newsletter</a>
+      <a href="login.html">Log In</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      
+      <h1>9<br>ALLEY<span class="accent">.</span></h1>
+      <p class="hero-tagline">PLAY &nbsp;·&nbsp; CONNECT &nbsp;·&nbsp; DISCOVER</p>
+      <p class="hero-sub">A gaming, comics and culture destination built for people who take their tabletop seriously and their nights out even more seriously. Board games, manga, collectibles, tournaments.....One address for all of it.</p>
+      <div class="hero-cta">
+        <a href="#alley" class="btn solid">Step into the Alley</a>
+        <a href="#events" class="btn ghost">See what's on</a>
+      </div>
+    </div>
+    
+  </section>
+
+  <section class="section-dark" id="rebrand">
+    <div class="wrap">
+      <h2 class="title">A game store has a ceiling. A destination doesn't.</h2>
+      <p class="lede">Throne of Games was built around a showroom — board games, card games, tournaments. Good bones, narrow name. 9 Alley keeps everything that worked and removes the limit, making room for comics, collectibles, an 18+ collection, and whatever gets added next without another rebrand.</p>
+    </div>
+  </section>
+
+  <section class="section-charcoal" id="alley">
+    <div class="wrap">
+      <p class="kicker">The ecosystem</p>
+      <h2 class="title">Eight dark lanes into the same place.</h2>
+      <p class="lede">Each corner of 9 Alley can start as a section on a shelf and grow into a room of its own.</p>
+
+      <div class="alley-grid">
+        <div class="alley-cell">
+          <span class="alley-mark">The Table</span>
+          <div>
+            <h3>Board &amp; Strategy</h3>
+            <p>Where Catan, Risk and Ticket to Ride get set up and stay set up for the night.</p>
+          </div>
+        </div>
+        <div class="alley-cell">
+          <span class="alley-mark">The Deck</span>
+          <div>
+            <h3>Card Games</h3>
+            <p>From UNO to Poker to BlackJack! Every table needs a deck within reach.</p>
+          </div>
+        </div>
+        <div class="alley-cell">
+          <span class="alley-mark">The Shelf</span>
+          <div>
+            <h3>Comics &amp; Manga</h3>
+            <p>Think Marvel, DC and the manga wall, all well organized for buying.</p>
+          </div>
+        </div>
+        <div class="alley-cell">
+          <span class="alley-mark">The Arena</span>
+          <div>
+            <h3>Tournaments</h3>
+            <p>Chess clocks out, brackets up. Where the competitive crowd shows up.</p>
+          </div>
+        </div>
+        <div class="alley-cell">
+          <span class="alley-mark">The Shop</span>
+          <div>
+            <h3>Merch &amp; Collectibles</h3>
+            <p>9 Alley hoodies, pins, and the collectible cases by the register.</p>
+          </div>
+        </div>
+        <div class="alley-cell">
+          <span class="alley-mark">The Vault</span>
+          <div>
+            <h3>Rare &amp; Limited</h3>
+            <p>The out-of-print, the signed, the one-of-few. Kept behind glass.</p>
+          </div>
+        </div>
+        <div class="alley-cell after-dark">
+          <span class="alley-mark">After Dark</span>
+          <div>
+            <h3>18+ Collection</h3>
+            <p>A separate room, a separate shelf online. its our very own dark corner.</p>
+          </div>
+        </div>
+        <div class="alley-cell">
+          <span class="alley-mark">Alley Nights</span>
+          <div>
+            <h3>Events</h3>
+            <p>Trivia — Coming Soon!.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark" id="games">
+    <div class="wrap">
+      <p class="kicker">On the shelves</p>
+      <h2 class="title">Our catalogue built for every kind of table.</h2>
+    
+      <div class="catalogue">
+        <div class="cat-card">
+          <h4>CLASSICS</h4>
+          <ul><li>Chess</li><li>Checkers</li><li>Monopoly</li><li>Scrabble</li><li>Dominoes</li></ul>
+        </div>
+        <div class="cat-card">
+          <h4>STRATEGY</h4>
+          <ul><li>Catan</li><li>Risk</li><li>Ticket to Ride</li><li>Carcassonne</li><li>Azul</li></ul>
+        </div>
+        <div class="cat-card">
+          <h4>PARTY</h4>
+          <ul><li>Exploding Kittens</li><li>Codenames</li><li>Mafia</li><li>Werewolf</li><li>Taboo</li></ul>
+        </div>
+        <div class="cat-card">
+          <h4>CARD</h4>
+          <ul><li>Poker</li><li>Phase 10</li><li>Monopoly Deal</li><li>Sushi Go!</li><li>Dobble</li></ul>
+        </div>
+        <div class="cat-card">
+          <h4>QUICK PLAY</h4>
+          <ul><li>Connect 4</li><li>Jenga</li><li>Speed</li><li>Guess Who?</li><li>UNO</li></ul>
+        </div>
+        <div class="cat-card feature">
+          <h4>TRADITIONAL &amp; AFRICAN</h4>
+          <ul><li>Mancala</li><li>Oware</li><li>Wari</li><li>Manwa</li><li>+ local titles</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-charcoal" id="shop">
+    <div class="wrap">
+      <p class="kicker">9 Alley online</p>
+      <h2 class="title">Shop the Alley from anywhere.</h2>
+      <p class="lede">The showroom sets the tone, but the store doesn't stop at the door. Games, merch and collectibles ship out — with the full catalogue browsable before anything goes to checkout.</p>
+
+      <div class="shop-toolbar">
+        <div class="shop-filters" role="group" aria-label="Filter products by category">
+          <button type="button" class="filter-pill active" data-filter="all">All</button>
+          <button type="button" class="filter-pill" data-filter="games">Games</button>
+          <button type="button" class="filter-pill" data-filter="merch">Merch</button>
+          <button type="button" class="filter-pill" data-filter="collectibles">Collectibles</button>
+        </div>
+        <div class="cart-status"><span class="cart-count" id="cart-count">0</span> in cart</div>
+      </div>
+
+      <div class="shop-grid" id="shop-grid">
+        <article class="product-card" data-category="games">
+          <div class="product-media"><span>CTN</span><span class="product-tag">Bestseller</span></div>
+          <div class="product-info">
+            <p class="product-cat">The Table</p>
+            <h3 class="product-name">Catan — Standard Edition</h3>
+            <div class="product-row"><span class="product-price">$44</span><button type="button" class="add-btn">Add to cart</button></div>
+          </div>
+        </article>
+        <article class="product-card" data-category="games">
+          <div class="product-media"><span>WRI</span></div>
+          <div class="product-info">
+            <p class="product-cat">Traditional &amp; African</p>
+            <h3 class="product-name">Wari — Handcrafted Board</h3>
+            <div class="product-row"><span class="product-price">$38</span><button type="button" class="add-btn">Add to cart</button></div>
+          </div>
+        </article>
+        <article class="product-card" data-category="merch">
+          <div class="product-media"><span>9A</span><span class="product-tag">New</span></div>
+          <div class="product-info">
+            <p class="product-cat">The Shop</p>
+            <h3 class="product-name">9 Alley Hoodie — Charcoal</h3>
+            <div class="product-row"><span class="product-price">$62</span><button type="button" class="add-btn">Add to cart</button></div>
+          </div>
+        </article>
+        <article class="product-card" data-category="collectibles">
+          <div class="product-media"><span>VLT</span><span class="product-tag">Limited</span></div>
+          <div class="product-info">
+            <p class="product-cat">The Vault</p>
+            <h3 class="product-name">Founders' Card Deck — No. 09/500</h3>
+            <div class="product-row"><span class="product-price">$95</span><button type="button" class="add-btn">Add to cart</button></div>
+          </div>
+        </article>
+        <article class="product-card" data-category="games">
+          <div class="product-media"><span>UNO</span></div>
+          <div class="product-info">
+            <p class="product-cat">The Deck</p>
+            <h3 class="product-name">UNO — Alley Edition</h3>
+            <div class="product-row"><span class="product-price">$14</span><button type="button" class="add-btn">Add to cart</button></div>
+          </div>
+        </article>
+        <article class="product-card" data-category="merch">
+          <div class="product-media"><span>CAP</span></div>
+          <div class="product-info">
+            <p class="product-cat">The Shop</p>
+            <h3 class="product-name">9 Alley Snapback</h3>
+            <div class="product-row"><span class="product-price">$28</span><button type="button" class="add-btn">Add to cart</button></div>
+          </div>
+        </article>
+        <article class="product-card" data-category="collectibles">
+          <div class="product-media"><span>PIN</span></div>
+          <div class="product-info">
+            <p class="product-cat">The Shop</p>
+            <h3 class="product-name">Enamel Pin Set — Vol. 1</h3>
+            <div class="product-row"><span class="product-price">$18</span><button type="button" class="add-btn">Add to cart</button></div>
+          </div>
+        </article>
+        <article class="product-card" data-category="games">
+          <div class="product-media"><span>MNC</span></div>
+          <div class="product-info">
+            <p class="product-cat">Traditional &amp; African</p>
+            <h3 class="product-name">Mancala — Travel Set</h3>
+            <div class="product-row"><span class="product-price">$26</span><button type="button" class="add-btn">Add to cart</button></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark" id="comics">
+    <div class="wrap">
+      <p class="kicker">Beyond the tabletop</p>
+      <h2 class="title">Where comics, manga and local stories share a shelf.</h2>
+
+      <div class="comics-row">
+        <div class="comics-col">
+          <h4>Marvel &amp; DC</h4>
+          <ul>
+            <li>Spider-Man, Black Panther, X-Men</li>
+            <li>Batman, Superman, Justice League</li>
+            <li>Avengers, Teen Titans, Venom</li>
+          </ul>
+        </div>
+        <div class="comics-col">
+          <h4>Manga</h4>
+          <ul>
+            <li>One Piece, Naruto, Bleach</li>
+            <li>Jujutsu Kaisen, Demon Slayer</li>
+            <li>Attack on Titan, Solo Leveling</li>
+            <li>Black Clover</li>
+          </ul>
+        </div>
+        <div class="comics-col origin">
+          <h4>African &amp; Sierra Leonean Stories</h4>
+          <p>The long-term shelf: a platform for local creators to publish original comics, folklore and characters — built and sold through 9 Alley, not just stocked by it.</p>
+          <p>This is where the brand stops importing culture and starts producing it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="afterdark" id="afterdark">
+    <div class="wrap">
+      <div>
+        <p class="kicker">A separate room</p>
+        <h2 class="title">After Dark.</h2>
+        <p class="lede">The adult collection lives as its own sub-brand — kept apart from the general catalogue, in store and online, so 9 Alley stays welcoming to everyone while still serving this market properly. Adult party and card games, intimacy games, and permitted lifestyle accessories.</p>
+      </div>
+      <div class="age-gate">
+        <strong>18+ Only</strong>
+        This section is age-restricted both in the physical Alley and online. Access is verified before entry, and it never appears in general browsing, storefront windows, or under-18 marketing.
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark" id="arena-section">
+    <div class="wrap">
+      <p class="kicker">Competition</p>
+      <h2 class="title">The Arena keeps people coming back.</h2>
+      <p class="lede">Regular tournaments turn customers into regulars, and regulars into the 9 Alley Championship field.</p>
+  </section>
+
+  <section class="section-charcoal" id="events">
+    <div class="wrap">
+      <p class="kicker">On the calendar</p>
+      <h2 class="title">Alley Nights.</h2>
+      <p class="lede">Product sales alone don't build community — reasons to show up in person do.</p>
+  </section>
+
+  <section class="vision" id="vision">
+    <div class="wrap">
+      <p class="kicker">The bigger picture</p>
+      <h2 class="title">Not a game store. A culture built around play.</h2>
+      <p class="vision-line">A chess player sits beside a manga reader. A group finds a game they've never heard of. Collectors find something unusual. Local creators find a shelf. And eventually, 9 Alley makes the games and comics it sells.</p>
+
+      <div class="vision-words">
+        <span>Players</span><span>Collectors</span><span>Creators</span><span>Competitors</span><span>Comic fans</span><span>Tabletop communities</span>
+      </div>
+
+      <p class="big-mark">9 ALLEY</p>
+    </div>
+  </section>
+
+  <section class="newsletter" id="newsletter">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Stay in the loop</p>
+        <h2 class="title">Drops, tournaments, and Alley Nights — first.</h2>
+      </div>
+      <div>
+        <form class="nl-form" id="newsletter-form">
+          <input type="email" id="newsletter-email" placeholder="you@email.com" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-note" id="newsletter-status">No spam — just what's new at the Alley, a few times a month.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="foot-brand">9 ALLEY</div>
+      <div class="foot-links">
+        <a href="#alley">The Alley</a>
+        <a href="#games">Games</a>
+        <a href="#comics">Comics</a>
+        <a href="#events">Events</a>
+      </div>
+    </div>
+    <p class="foot-fine">9 Alley Shop · 9 Alley Arena · 9 Alley Club · 9 Alley After Dark · 9 Alley Originals · 9 Alley Events · 9 Alley Studios</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var cartCount = 0;
+    var counterEl = document.getElementById('cart-count');
+
+    document.querySelectorAll('.product-card .add-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if (btn.classList.contains('added')) return;
+        cartCount += 1;
+        counterEl.textContent = cartCount;
+        btn.textContent = 'Added';
+        btn.classList.add('added');
+        setTimeout(function(){
+          btn.textContent = 'Add to cart';
+          btn.classList.remove('added');
+        }, 1400);
+      });
+    });
+
+    // Newsletter signup — replace the URL below with your real backend once it's deployed.
+    var API_BASE = 'http://localhost:4000';
+    var nlForm = document.getElementById('newsletter-form');
+    var nlStatus = document.getElementById('newsletter-status');
+    if (nlForm){
+      nlForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        var email = document.getElementById('newsletter-email').value;
+        nlStatus.textContent = 'Signing you up...';
+        fetch(API_BASE + '/api/newsletter', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){
+          nlStatus.textContent = data.message || "You're on the list.";
+          nlForm.reset();
+        })
+        .catch(function(){
+          nlStatus.textContent = "Couldn't reach the server. Is the backend running?";
+        });
+      });
+    }
+
+    var pills = document.querySelectorAll('.filter-pill');
+    var cards = document.querySelectorAll('#shop-grid .product-card');
+    pills.forEach(function(pill){
+      pill.addEventListener('click', function(){
+        pills.forEach(function(p){ p.classList.remove('active'); });
+        pill.classList.add('active');
+        var filter = pill.getAttribute('data-filter');
+        cards.forEach(function(card){
+          var show = filter === 'all' || card.getAttribute('data-category') === filter;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
